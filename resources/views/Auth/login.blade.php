@@ -23,7 +23,7 @@ external-page external-alt sb-l-c sb-r-c
         </div>
 
         <!-- Login Panel/Form -->
-        <div class="panel mt30 mb25">
+        <div class="panel mt30 mb25 ">
 
             <form method="post"  id="contact">
                 <div class="panel-body bg-light p25 pb15">
@@ -88,12 +88,12 @@ external-page external-alt sb-l-c sb-r-c
                     </div>
                 </div>
 
-                <div class="panel-footer clearfix">
-                    <button type="submit" class="button btn-primary mr10 pull-right">Connexion</button>
-                    <label class="switch ib switch-primary mt10">
+                <div class="panel-footer clearfix " style="background:#E9573F">
+                    <button type="submit" class="button btn-dark mr10 pull-right">Connexion</button>
+                    <label class="switch ib switch-dark mt10">
                         <input type="checkbox" name="remember" id="remember" checked>
                         <label for="remember" data-on="YES" data-off="NO"></label>
-                        <span>Remember me</span>
+                        <span style="color: white;">Remember me</span>
                     </label>
                 </div>
                 {{ csrf_field() }}

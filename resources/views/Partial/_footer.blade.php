@@ -12,11 +12,9 @@
 
     <!-- Theme Javascript -->
     <script src="{{asset('assets/js/utility/utility.js')}}"></script>
-    <script src="{{asset('assets/js/demo/demo.js')}}"></script>
+
     <script src="{{asset('assets/js/main.js')}}"></script>
 
-    <!-- Widget Javascript -->
-    <script src="{{asset('assets/js/demo/widgets.js')}}"></script>
 
 
     <!--    feuille js perso-->
@@ -35,16 +33,19 @@
         Core.init();
 
         // dataTables
-        $('table').dataTable({
-            "languages": {
-                "lenghtMenu": "Afficher _MENU_ par pages",
-                "zeroRecords": "Aucun résultat trouvé",
-                "info": "Voir la page _PAGE_ sur _PAGE_",
-                "infoEmpty": "Aucun résultat disponible",
-                "infoFiltered": "(filtré sur _MAX_ résultats)"
-            },
-            "sDom": '<"dt-panelmenu clearfix"lfr>t<"dt-panelfooter clearfix"ip>'
-        });
+        if($('table').size()>0){
+            $('table').dataTable({
+                "languages": {
+                    "lenghtMenu": "Afficher _MENU_ par pages",
+                    "zeroRecords": "Aucun résultat trouvé",
+                    "info": "Voir la page _PAGE_ sur _PAGE_",
+                    "infoEmpty": "Aucun résultat disponible",
+                    "infoFiltered": "(filtré sur _MAX_ résultats)"
+                },
+                "sDom": '<"dt-panelmenu clearfix"lfr>t<"dt-panelfooter clearfix"ip>'
+            });
+        }
+
     });
 </script>
 <!-- END: PAGE SCRIPTS -->

@@ -10,6 +10,22 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
+    /**
+     * redirections
+     * surcharge des valeurs par défaut de Laravel
+     * @var string
+     */
+
+    // chemin de la page de login
+    protected $loginPath = '/auth/login';
+    // chemin de la page à atteindre une fois authentifié
+    protected $redirectPath = '/admin';
+    // chemin de la page de login une fois déconnecté
+    protected $redirectAfterLogout = '/auth/login/';
+    // redirection si navigation sans etre authentifié
+    protected $redirectTo = '/admin/login';
+
+
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -73,6 +89,7 @@ class AuthController extends Controller
 
         return view('Auth/login');
     }
+
 
 
 

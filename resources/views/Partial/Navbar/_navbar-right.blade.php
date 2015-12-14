@@ -518,8 +518,8 @@
 </li>
 <li class="dropdown menu-merge">
     <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
-        <img src="assets/img/avatars/1.jpg" alt="avatar" class="mw30 br64">
-        <span class="hidden-xs pl15"> Michael .R </span>
+        <img src="{{ Auth::user()->photo}}" alt="avatar" class="mw30 br64">
+        <span class="hidden-xs pl15">{{ Auth::user()->firstname}} {{ substr(Auth::user()->lastname, 0, 1)}}.</span>
         <span class="caret caret-tp hidden-xs"></span>
     </a>
     <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
@@ -565,7 +565,7 @@
                 <span class="fa fa-gear"></span> Settings </a>
         </li>
         <li class="dropdown-footer">
-            <a href="#" class="">
+            <a href="{{ url('auth/logout')}}" class="">
                 <span class="fa fa-power-off pr5"></span> Logout </a>
         </li>
     </ul>

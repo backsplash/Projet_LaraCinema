@@ -11,15 +11,6 @@
 |
 */
 
-/**
- * page accueil
- * uses => appelle le nom du controller et l'action(=fonction) du controller
- */
-
-Route::get('/', [
-        "as" => "home_page",
-       "uses" => "MainController@index"
-    ]);
 
 
 
@@ -71,8 +62,17 @@ Route::controllers([
  * groupe de routes Admin = backoffice
  * les URLS seront préfixées par "admin"
  */
-Route::group(["prefix" => "admin"], function(){
+Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
 
+    /**
+     * page accueil
+     * uses => appelle le nom du controller et l'action(=fonction) du controller
+     */
+
+    Route::get('/', [
+        "as" => "home_page",
+        "uses" => "MainController@index"
+    ]);
 
 
 
@@ -439,6 +439,29 @@ Route::group(["prefix" => "admin"], function(){
 
         });
 
+
+    /**
+     * CRUD de administrators
+     */
+    Route::group(['prefix' => 'administrators'], function(){
+
+        Route::get('/index', [
+           'as' => 'administrators_index',
+           'uses' => 'AdministratorsController@index'
+        ]);
+
+        Route::get('/delete/{id}', [
+            "as" => "administrators_delete",
+            "uses" => "AdministratorsController@delete"
+        ])->where('id', '\d+');
+
+        Route::get('/edit/{id}', [
+            "as" => "administrators_edit",
+            "uses" => "AdministratorsController@edit"
+        ])->where('id', '\d+');
+
+
+    });
 
 });
 
