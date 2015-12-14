@@ -1,0 +1,15 @@
+figure.apercu_image img{
+    display: block;
+    text-align: center;
+    font-weight: bold;
+
+    line-height: 300px;
+    width: 100%;
+    height: auto;
+}
+
+figure.apercu_image{
+    width:100%;
+    min-height: 200px;
+    background-color: #EC6F5A;
+}
