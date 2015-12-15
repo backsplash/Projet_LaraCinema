@@ -69,11 +69,21 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
      * uses => appelle le nom du controller et l'action(=fonction) du controller
      */
 
-    Route::get('/', [
+    Route::get('/index', [
         "as" => "home_page",
         "uses" => "MainController@index"
     ]);
 
+
+    /**
+     * page dashboard
+     * uses => appelle le nom du controller et l'action(=fonction) du controller
+     */
+
+    Route::get('/', [
+        "as" => "dashboard",
+        "uses" => "MainController@dashboard"
+    ]);
 
 
 
@@ -132,11 +142,12 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
 
         /**
          * enregistre une catégorie dans la BDD depuis un formulaire
+         * parametre $id optionnel pour l'edition
          */
-        Route::post('/store', [
+        Route::post('/store/{id?}', [
             "as" => "categories_store",
             "uses" => "CategoriesController@store"
-        ]);
+        ])->where('id', '\d+');
 
     });
 
@@ -445,6 +456,11 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
      */
     Route::group(['prefix' => 'administrators'], function(){
 
+        Route::get('/', [
+            'uses' => 'AdministratorsController@index'
+        ]);
+
+
         Route::get('/index', [
            'as' => 'administrators_index',
            'uses' => 'AdministratorsController@index'
@@ -459,6 +475,21 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
             "as" => "administrators_edit",
             "uses" => "AdministratorsController@edit"
         ])->where('id', '\d+');
+
+        Route::get('/create', [
+            "as" => "administrators_create",
+            "uses" => "AdministratorsController@create"
+        ]);
+
+        /**
+         * enregistre ou edite un admin dans la BDD depuis un formulaire
+         * parametre $id optionnel pour l'édition
+         */
+        Route::post('/store/{id?}', [
+            "as" => "administrators_store",
+            "uses" => "AdministratorsController@store"
+        ])->where('id', '\d+');
+
 
 
     });

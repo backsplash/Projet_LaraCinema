@@ -40,15 +40,31 @@ Class CategoriesController extends Controller{
         return view("Categories/read");
     }
 
+
+
+
     public function create(){
 
         return view("Categories/create");
     }
 
+
+
+
+
+
     public function edit($id){
 
-        return view("Categories/edit");
+        $categorie = Categories::find($id);
+        return view("Categories/edit", [
+            'categorie' => $categorie
+        ]);
     }
+
+
+
+
+
 
     public function delete($id){
 
@@ -67,16 +83,33 @@ Class CategoriesController extends Controller{
         return Redirect::route('categories_index');
     }
 
+
+
+
+
+
     /**
      * action pour enregistrer en bdd les données du formulaire
      * la classe Request permet de receptionner les données en POST de manière sécurisée
+     * @param $id (facultatif), valeur null par defaut
      */
-    public function store(Request $request){
+    public function store(Request $request, $id = null){
 
-        $categorie = new Categories();
-        foreach($request->except('_token') as $key => $value){
-            $categorie->$key = $value;
+        if(!empty($id)){
+            $categorie = Categories::find($id);
         }
+        else{
+
+            $categorie = new Categories();
+        }
+
+        if(!empty($request->title)){
+            $categorie->title = $request->title;
+        }
+        $categorie->description = $request->description;
+
+
+
 
         /**
          * traitement de l'upload de l'image
@@ -92,19 +125,28 @@ Class CategoriesController extends Controller{
             $destinationPath = public_path() . '/uploads/categories';
             //deplacement de l'image uploadée
             $file->move($destinationPath, $filename);
-        }
-        //mise à jour de la propriété de l'objet Categories
-        $categorie->image = asset('/uploads/categories/' . $filename);
 
-        // mise à jour de la propriété slug, reprise du title en minuscule, sans espace
-        $categorie->slug = str_replace(" ", "-", strtolower($request->title));
+            //mise à jour de la propriété de l'objet Categories
+            $categorie->image = asset('/uploads/categories/' . $filename);
+
+        }
+
+        if(!empty($categorie->title)){
+            // mise à jour de la propriété slug, reprise du title en minuscule, sans espace
+            $categorie->slug = str_replace(" ", "-", strtolower($request->title));
+        }
 
         //sauvegarde de l'objet Categories en base
         $categorie->save();
 
         //creer un messsage flash de type success
-        Session::flash('success', "La catégorie {$categorie->title} a bien été créée.");
+        if(!empty($id)){
+            Session::flash('success', "La catégorie {$categorie->title} a bien été modifiée.");
 
+        }else{
+
+            Session::flash('success', "La catégorie {$categorie->title} a bien été créée.");
+        }
         //redirection vers la liste des catégories
         return Redirect::route('categories_index');
     }

@@ -74,24 +74,71 @@
 <!-- Start: Sidebar Menu -->
 <ul class="nav sidebar-menu">
 <li class="sidebar-label pt20">Menu</li>
-<li>
-    <a href="">
-        <span class="fa fa-calendar"></span>
-        <span class="sidebar-title">Calendar</span>
-              <span class="sidebar-title-tray">
-                <span class="label label-xs bg-primary">New</span>
-              </span>
-    </a>
-</li>
-    <a href="{{ route('administrators_index')}}">
-        <span class="fa fa-lock"></span>
-        <span class="sidebar-title">Gestion des administrateurs</span>
-        <span class="sidebar-title-tray">
-                <span class="label label-xs bg-primary">New</span>
-              </span>
-    </a>
-<li>
+<!--<li>-->
+<!--    <a href="">-->
+<!--        <span class="fa fa-calendar"></span>-->
+<!--        <span class="sidebar-title">Calendar</span>-->
+<!--              <span class="sidebar-title-tray">-->
+<!--                <span class="label label-xs bg-primary">New</span>-->
+<!--              </span>-->
+<!--    </a>-->
+<!--</li>-->
+    <li @if( \Request::route()->getName() == 'home_page') class="active" @endif>
+    <a href="{{ route('home_page')}}">
+        <span class="fa fa-home"></span>
+        <span class="sidebar-title">Dashboard</span>
 
+    </a>
+    </li>
+
+    <li @if( \Request::route()->getName() == 'movies_index') class="active" @endif>
+        <a href="{{ route('movies_index')}}">
+            <span class="fa fa-film"></span>
+            <span class="sidebar-title">Gestion des films</span>
+
+        </a>
+    </li>
+    <li @if( \Request::route()->getName() == 'cinemas_index') class="active" @endif>
+    <a href="{{ route('cinemas_index')}}">
+        <span class="fa fa-caret-square-o-right"></span>
+        <span class="sidebar-title">Gestion des cinémas</span>
+
+    </a>
+    </li>
+    <li @if( \Request::route()->getName() == 'actors_index') class="active" @endif>
+        <a href="{{ route('actors_index')}}">
+            <span class="fa fa-star"></span>
+            <span class="sidebar-title">Gestion des acteurs</span>
+
+        </a>
+    </li>
+    <li @if( \Request::route()->getName() == 'directors_index') class="active" @endif>
+        <a href="{{ route('directors_index')}}">
+            <span class="fa fa-bullhorn"></span>
+            <span class="sidebar-title">Gestion des réalisateurs</span>
+
+        </a>
+    </li>
+    <li @if( \Request::route()->getName() == 'categories_index') class="active" @endif>
+        <a href="{{ route('categories_index')}}">
+            <span class="fa fa-tag"></span>
+            <span class="sidebar-title">Gestion des catégories</span>
+
+        </a>
+    </li>
+    <li @if( \Request::route()->getName() == 'comments_index') class="active" @endif>
+        <a href="{{ route('comments_index')}}">
+            <span class="fa fa-comment-o"></span>
+            <span class="sidebar-title">Gestion des commentaires</span>
+
+        </a>
+    </li>
+<li @if( \Request::route()->getName() == 'administrators_index') class="active" @endif>
+    <a href="{{ route('administrators_index')}}">
+        <span class="fa fa-user"></span>
+        <span class="sidebar-title">Gestion des administrateurs</span>
+
+    </a>
 </li>
 
 </ul>

@@ -40,5 +40,20 @@ Class Actors extends Model{
     }
 
 
+    /**
+     * calcul des moyennes d'age
+     */
+
+    public function getAvgActors(){
+//          mode de syntaxe en SQL pur
+        return DB::select('SELECT ROUND( AVG( TIMESTAMPDIFF( YEAR, dob, NOW( ) ) ) )
+        AS age FROM actors ');
+
+//        return DB::table('actors')
+//            ->select('dob')
+//            ->get();
+    }
+
+
 
 }

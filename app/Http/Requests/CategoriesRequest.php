@@ -18,15 +18,28 @@ class CategoriesRequest extends FormRequest{
 
     public function rules(){
 
-        return [
-            'title' => 'required|min:2|max:100',
-            'desciption' => 'required|min:10|max:700',
-            'image' => 'required|image'
 
+        //recuperer l'id par la route en URL si mode édition
 
+        $id = $this->route('id');
 
+        //si l'argument est nul, validateurs de la création
+        if($id == null){
+            return [
+                'title' => 'required|min:2|max:100',
+                'desciption' => 'required|min:10|max:700',
+                'image' => 'required|image'
 
-        ];
+            ];
+        }else{
+            return [
+                'title' => 'min:2|max:100',
+                'desciption' => 'min:10|max:700',
+                'image' => 'image'
+
+            ];
+        }
+
     }
 
 

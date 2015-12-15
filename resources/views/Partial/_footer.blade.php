@@ -26,7 +26,7 @@
         "use strict";
 
         // Init Demo JS
-        Demo.init();
+       // Demo.init();
 
 
         // Init Theme Core

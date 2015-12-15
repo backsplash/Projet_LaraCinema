@@ -12,7 +12,6 @@ Movies
 <!--ecriture dans le content-->
 @section('content')
 
-        dashboard
 
 
 @endsection

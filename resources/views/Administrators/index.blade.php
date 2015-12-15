@@ -24,7 +24,7 @@ Administrators
         <h1 class="col-md-8">Liste des administrateurs <small>({{ count($administrators)}})</small></h1>
 
         <div class="col-md-4" style="margin-top:19px;">
-            <a href="" class="btn btn-sm btn-system pull-right">
+            <a href="{{ route('administrators_create')}}" class="btn btn-sm btn-system pull-right">
                 <i class="fa fa-plus"></i>Ajouter un administrateur</a>
         </div>
     </div>
@@ -38,6 +38,7 @@ Administrators
                 <table  aria-describedby="datatable2_info" role="grid" class="table table-striped table-hover dataTable no-footer table-responsive table-condensed" id="datatable2" cellspacing="0" width="100%">
                     <thead>
                     <tr role="row" class="dark">
+                        <th aria-label="Id: activate to sort column descending" aria-sort="ascending"  aria-controls="datatable2" tabindex="0" class="sorting_asc">Id</th>
                         <th aria-label="Image: activate to sort column descending" aria-sort="ascending"  aria-controls="datatable2" tabindex="0" class="sorting_asc">Image</th>
 
                         <th aria-label="Prenom: activate to sort column descending" aria-sort="ascending"  aria-controls="datatable2" tabindex="0" class="sorting_asc">Prénom</th>
@@ -54,6 +55,7 @@ Administrators
 
                     @foreach($administrators as $administrator)
                     <tr>
+                        <td class="text-center">{{$administrator->id}}</td>
                         <td><figure><img class="img-responsive" src="{{$administrator->photo}}" alt="image"></figure></td>
 
                         <td class="text-center">{{$administrator->firstname}}</td>
