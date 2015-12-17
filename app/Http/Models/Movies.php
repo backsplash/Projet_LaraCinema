@@ -62,5 +62,20 @@ Class Movies extends Model{
     }
 
 
+    public function getAvgMovies(){
+
+        return Movies::avg('note_presse');
+
+    }
+
+
+    public function getMoviesPerCat(){
+
+        return DB::table('movies')
+          ->select(DB::raw('COUNT(*) AS nbfilms, categories.title'))
+          ->join('categories')
+          ->groupBy('categories.title');
+
+    }
 
 }

@@ -349,38 +349,38 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
     });
 
     /**
-     * groupe de routes de Cinemas
-     * les URLS seront préfixées par "cinemas"
+     * groupe de routes de Cinema
+     * les URLS seront préfixées par "cinema"
      */
-    Route::group(["prefix" => "cinemas"], function(){
+    Route::group(["prefix" => "cinema"], function(){
 
         /**
          * page index : liste des cinemas
          */
         Route::get('/', [
 
-            "uses" => "CinemasController@index"
+            "uses" => "CinemaController@index"
         ]);
 
         Route::get('/index', [
-            "as" => "cinemas_index",
-            "uses" => "CinemasController@index"
+            "as" => "cinema_index",
+            "uses" => "CinemaController@index"
         ]);
 
         /**
          * page create : creer un cinema
          */
         Route::get('/create', [
-            "as" => "cinemas_create",
-            "uses" => "CinemasController@create"
+            "as" => "cinema_create",
+            "uses" => "CinemaController@create"
         ]);
 
         /**
          * page read : voir un cinema
          */
         Route::get('/read/{id}', [
-            "as" => "cinemas_read",
-            "uses" => "CinemasController@read"
+            "as" => "cinema_read",
+            "uses" => "CinemaController@read"
         ])->where('id', '\d+');
 
         /**
@@ -389,24 +389,24 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
          * le type d'argument est vérifié par le where
          */
         Route::get('/edit/{id}', [
-            "as" => "cinemas_edit",
-            "uses" => "CinemasController@edit"
+            "as" => "cinema_edit",
+            "uses" => "CinemaController@edit"
         ])->where('id', '\d+');
 
         /**
          * page delete : supprimer un cinema
          */
         Route::get('/delete/{id}', [
-            "as" => "cinemas_delete",
-            "uses" => "CinemasController@delete"
+            "as" => "cinema_delete",
+            "uses" => "CinemaController@delete"
         ])->where('id', '\d+');
 
         /**
          * enregistre un cinema dans la BDD depuis un formulaire
          */
         Route::post('/store', [
-            "as" => "cinemas_store",
-            "uses" => "CinemasController@store"
+            "as" => "cinema_store",
+            "uses" => "CinemaController@store"
         ]);
     });
 
@@ -494,6 +494,22 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
 
     });
 
+
+    /**
+     * api controller
+     */
+    Route::group(['prefix' => 'api'], function(){
+
+
+        // retour en JSON des categories
+        Route::get('/categories', [
+            'as' => 'api_categories',
+            'uses' => 'ApiController@categories'
+        ]);
+
+
+
+    });
 });
 
 

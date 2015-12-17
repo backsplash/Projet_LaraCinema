@@ -30,7 +30,11 @@ Class Comments extends Model{
 
     }
 
+    public function getAvgComments(){
+        // peut s'utiliser directement dans le Controller
+        return Comments::avg('note');
 
+    }
 
 
 

@@ -83,8 +83,8 @@
 <!--              </span>-->
 <!--    </a>-->
 <!--</li>-->
-    <li @if( \Request::route()->getName() == 'home_page') class="active" @endif>
-    <a href="{{ route('home_page')}}">
+    <li @if( \Request::route()->getName() == 'dashboard') class="active" @endif>
+    <a href="{{ route('dashboard')}}">
         <span class="fa fa-home"></span>
         <span class="sidebar-title">Dashboard</span>
 
@@ -99,7 +99,7 @@
         </a>
     </li>
     <li @if( \Request::route()->getName() == 'cinemas_index') class="active" @endif>
-    <a href="{{ route('cinemas_index')}}">
+    <a href="{{ route('cinema_index')}}">
         <span class="fa fa-caret-square-o-right"></span>
         <span class="sidebar-title">Gestion des cinémas</span>
 

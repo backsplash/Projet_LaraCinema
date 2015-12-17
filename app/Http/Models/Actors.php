@@ -45,13 +45,26 @@ Class Actors extends Model{
      */
 
     public function getAvgActors(){
-//          mode de syntaxe en SQL pur
-        return DB::select('SELECT ROUND( AVG( TIMESTAMPDIFF( YEAR, dob, NOW( ) ) ) )
-        AS age FROM actors ');
+//        mode de syntaxe en SQL pur
+//        marche mais peu souple
+//        return DB::select('SELECT ROUND( AVG( TIMESTAMPDIFF( YEAR, dob, NOW( ) ) ) )
+//        AS age FROM actors ');
 
-//        return DB::table('actors')
-//            ->select('dob')
-//            ->get();
+//        2ème méthode php : query builder, méthode hybride
+//        DB::table('actors') correspond à FROM actors en mysql
+//        DB::raw() permet d'utiliser les fonction mysql
+//      return DB::table('actors')
+//          ->select(DB::raw('ROUND( AVG( TIMESTAMPDIFF( YEAR, dob, NOW() ) ) ) AS age'))
+//        permet de prendre le premier résultat, LIMIT 1 en mysql
+///    first est équivalent à fetch(), et get() équivalent à fetchAll()
+//          ->first();
+
+//        3ème méthode, fonctions d'agrégat Eloquent ORM, php pur
+//          select avg(dob) from actors
+        //  retourne une moyenne de date !!!!
+        // a traiter avec Carbon dans le Controller
+           return Actors::avg('dob');
+
     }
 
 

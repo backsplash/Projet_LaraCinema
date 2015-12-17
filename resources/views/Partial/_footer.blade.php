@@ -33,8 +33,8 @@
         Core.init();
 
         // dataTables
-        if($('table').size()>0){
-            $('table').dataTable({
+        if($('.dataTable').size()>0){
+            $('.dataTable').dataTable({
                 "languages": {
                     "lenghtMenu": "Afficher _MENU_ par pages",
                     "zeroRecords": "Aucun résultat trouvé",
