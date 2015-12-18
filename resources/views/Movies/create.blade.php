@@ -42,7 +42,7 @@ Movies
 
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
-        <form enctype="multipart/form-data" action="{{route('movies_store')}}" method="post" class="form-horizontal panel panel-danger">
+        <form novalidate enctype="multipart/form-data" action="{{route('movies_store')}}" method="post" class="form-horizontal panel panel-danger">
 
             <div class="panel-heading">
                 <span class="panel-title">Ajout d'un film</span>
@@ -141,15 +141,15 @@ Movies
                         <div class="col-md-4">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <label class=" control-label" for="langue">Langue :</label>
+                                    <label class=" control-label" for="languages">Langue :</label>
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                           <i class="fa fa-flag"></i>
                                         </span>
-                                         <input value="{{ old('langue')}}" type="text" id="langue" name="langue" class="form-control" placeholder="Langue du film">
+                                         <input value="{{ old('languages')}}" type="text" id="languages" name="languages" class="form-control" placeholder="Langue du film">
                                     </div>
-                                    @if ($errors->has('langue'))
-                                    <p class="help-block text-danger">{{$errors->first('langue')}}</p>
+                                    @if ($errors->has('languages'))
+                                    <p class="help-block text-danger">{{$errors->first('languages')}}</p>
                                     @endif
                                 </div>
                             </div>
@@ -308,8 +308,8 @@ Movies
                     <div class="col-md-4">
                         <div class="form-group">
                             <div class="col-md-12">
-                                <label class=" control-label" for="categorie">Categorie :</label>
-                                <select id="categorie" name="categorie" class="form-control select2" required>
+                                <label class=" control-label" for="categories_id">Categorie :</label>
+                                <select id="categories_id" name="categories_id" class="form-control select2" required>
                                     @foreach ($categories as $categorie)
                                         <option value="{{$categorie->id}}">{{$categorie->title}}</option>
                                     @endforeach

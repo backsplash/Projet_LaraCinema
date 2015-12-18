@@ -465,6 +465,23 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
                 "uses" => "CommentsController@activate"
             ])->where('id', '\d+');
 
+
+            /**
+             * action Favori
+             */
+            Route::get('/like/{id}/{action}', [
+                "as" => "comments_favori",
+                "uses" => "CommentsController@favori"
+            ]);
+
+            /**
+             * action forget
+             */
+            Route::get('/forget/{action}', [
+                "as" => "comments_forget",
+                "uses" => "CommentsController@forget"
+            ]);
+
         });
 
 

@@ -28,6 +28,7 @@ Class Comments extends Model{
             ->select('comments.*', 'movies.title' )
             ->get();
 
+
     }
 
     public function getAvgComments(){
@@ -36,6 +37,14 @@ Class Comments extends Model{
 
     }
 
+    public function user(){
+        //namespace + nom de la classe mise en relation
+        return $this->belongsTo('App\Http\Models\User');
+    }
+    public function movies(){
+        //namespace + nom de la classe mise en relation
+        return $this->belongsTo('App\Http\Models\Movies');
+    }
 
 
 }

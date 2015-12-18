@@ -20,7 +20,7 @@ Dashboard
     $(function(){
         $('.scroller').slimScroll({
             height: '250px',
-            alwaysVisible: true,
+            alwaysVisible: false,
             railVisible: true
         });
 
@@ -77,7 +77,7 @@ Dashboard
 
 
       // c3 chart = donut chart
-        $.getJSON("api/actors", function(data){
+        $.getJSON($('#chart').data('url'), function(data){
             var chart = c3.generate({
                 data: {
                     columns: data,
@@ -97,8 +97,10 @@ Dashboard
 
        // highcharts histogramme
 
-        $.getJSON("api/actorsCity", function(data){
+        $.getJSON($('#high-line').data('url'), function(data){
+
             // High Line 3
+            console.log(data.name);
 
             $('#high-line').highcharts({
                 credits: false,
@@ -118,15 +120,29 @@ Dashboard
                 xAxis: {
                     gridLineColor: '#EEE',
                     lineColor: '#EEE',
-                    tickColor: '#EEE'
+                    tickColor: '#EEE',
+                    type: 'category',
+                    labels: {
+                        distance: 5,
+                        rotation: -45,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    },
+                   categories: data.name
                 },
                 yAxis: {
                     min: 0,
                     tickInterval: 5,
                     gridLineColor: '#EEE',
                     title: {
-                        text: null
+                        text: 'Nb d\'acteurs'
                     }
+                },
+
+                legend: {
+                    enabled: true
                 },
                 plotOptions: {
                     spline: {
@@ -136,15 +152,67 @@ Dashboard
                         fillOpacity: 0.2
                     }
                 },
-                legend: {
-                    enabled: false
-                },
-                series: data
+
+                series: data.actors
+
+
             });
 
        });
 
+        //$.getJSON($('#c1').data('url'), function(data){
 
+        var demoCircleGraphs = function() {
+            var infoCircle = $('.info-circle');
+            if (infoCircle.length) {
+                // Color Library we used to grab a random color
+                var colors = {
+                    "primary": [bgPrimary, bgPrimaryLr,
+                        bgPrimaryDr
+                    ],
+                    "info": [bgInfo, bgInfoLr, bgInfoDr],
+                    "warning": [bgWarning, bgWarningLr,
+                        bgWarningDr
+                    ],
+                    "success": [bgSuccess, bgSuccessLr,
+                        bgSuccessDr
+                    ],
+                    "alert": [bgAlert, bgAlertLr, bgAlertDr]
+                };
+                // Store all circles
+                var circles = [];
+                infoCircle.each(function(i, e) {
+                    // Define default color
+                    var color = ['#DDD', bgPrimary];
+                    // Modify color if user has defined one
+                    var targetColor = $(e).data(
+                        'circle-color');
+                    if (targetColor) {
+                        var color = ['#DDD', colors[
+                            targetColor][0]]
+                    }
+                    // Create all circles
+                    var circle = Circles.create({
+                        id: $(e).attr('id'),
+                        value: $(e).attr('value'),
+                        radius: $(e).width() / 2,
+                        width: 14,
+                        colors: color,
+                        text: function(value) {
+                            var title = $(e).attr('title');
+                            if (title) {
+                                return '<h2 class="circle-text-value">' + value + '</h2><p>' + title + '</p>'
+                            }
+                            else {
+                                return '<h2 class="circle-text-value mb5">' + value + '</h2>'
+                            }
+                        }
+                    });
+                    circles.push(circle);
+                });
+
+
+            }        }
 
 
 
@@ -247,7 +315,7 @@ Dashboard
 
             <div class="panel-body ">
 
-                <div id="chart" class="c3" style="height: 370px; width: 100%; max-height: 370px; position: relative;">
+                <div id="chart" class="c3" style="height: 370px; width: 100%; max-height: 370px; position: relative;" data-url="{{ route('api_actors') }}">
 
                 </div>
 
@@ -288,7 +356,7 @@ Dashboard
                         <tr>
                             <td>
                             Acteurs <span class="badge bg-danger pull-right">{{ $nbacteurs}}</span>
-                        <</td>
+                        </td>
                         </tr>
                         <tr>
                             <td>
@@ -419,7 +487,9 @@ Dashboard
                             <b>{{ $session->movies->title}}</b> au cinéma:
                             <a href="#">{{ $session->cinema->title}}</a>
                         </div>
-                        <div class="timeline-date">{{ $session->date_session}}</div>
+
+                        <?php  $time = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $session->date_session) ?>
+                        <div class="timeline-date">{{ $time->format('H:i') }}</div>
                     </li>
                     @endforeach
 
@@ -432,17 +502,41 @@ Dashboard
 </div>
 
 
-
-<div class="panel panel-danger ">
-    <div class="panel-heading">
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-danger ">
+            <div class="panel-heading">
                 <span class="panel-icon">
                   <i class="fa fa-home"></i>
                 </span>
-        <span class="panel-title">Répartition des acteurs par ville</span>
-    </div>
-    <div class="panel-body pn">
-        <div data-highcharts-chart="3" id="high-line" ">
+                <span class="panel-title">Répartition des acteurs par ville</span>
+            </div>
+            <div class="panel-body pn">
+                <div data-highcharts-chart="3" id="high-line" data-url="{{ route('api_actorsCity') }}">
+                </div>
+            </div>
         </div>
+
+
     </div>
+
+    <div class="col-md-6">
+
+        <div class="panel panel-danger ">
+            <div class="panel-heading">
+            <span class="panel-icon">
+              <i class="fa fa-home"></i>
+            </span>
+                <span class="panel-title">Répartition des commentaires</span>
+            </div>
+            <div class="panel-body pn">
+                <div class="info-circle" id="c1" title="Twitter" value="80" data-circle-color="primary"></div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
+
+
 @endsection

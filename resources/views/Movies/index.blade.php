@@ -16,6 +16,29 @@ Movies
 <script src="{{asset('vendor/plugins/datatables/media/js/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/plugins/datatables/media/js/dataTables.bootstrap.js')}}"></script>
 
+<script type="text/javascript">
+    $('a button.btn-danger').click(function(e){
+
+        var elt = $(this);
+        //1. blocker mon evenement (redirection)
+        e.preventDefault();
+
+        //2. Envoie de ma requete:
+        // methode ajax de Jquery
+        // Une requete en GET
+        // sur l'URL /index.html
+        $.ajax({
+            method: "GET",
+            url: $(this).attr('href') // href du <a>
+        }).done(function() {
+            elt.parents('tr').fadeOut('slow');
+
+        });
+    });
+
+</script>
+
+
 @endsection
 
 

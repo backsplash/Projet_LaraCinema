@@ -29,7 +29,7 @@
     </div>
 
 
-    <div class="col-md-11">
+    <div class="col-md-12">
         <div class="panel panel-visible" id="spy2">
 
             <div class="panel-body pn">
@@ -43,7 +43,7 @@
                             <th aria-label="Titre: activate to sort column descending" aria-sort="ascending"  aria-controls="datatable2" tabindex="0" class="sorting_asc text-center">Film</th>
 
                             <th aria-label="Contenu: activate to sort column descending" aria-sort="ascending"  aria-controls="datatable2" tabindex="0" class="sorting_asc text-center">Contenu</th>
-
+                            <th aria-label="Auteur: activate to sort column descending" aria-sort="ascending"  aria-controls="datatable2" tabindex="0" class="sorting_asc text-center">Auteur</th>
                             <th aria-label="Note: activate to sort column descending" aria-sort="ascending"  aria-controls="datatable2" tabindex="0" class="sorting_asc text-center">Note</th>
                             <th aria-label="Etat: activate to sort column descending" aria-sort="ascending"  aria-controls="datatable2" tabindex="0" class="sorting_asc text-center">Etat</th>
 
@@ -56,8 +56,9 @@
                         @foreach($comments as $comment)
                             <tr>
                                 <td class="text-center">{{$comment->id}}</td>
-                                <td >{{$comment->title}}</td>
+                                <td >{{$comment->movies->title}}</td>
                                 <td >{{str_limit(strip_tags($comment->content), 250, '...')}}</td>
+                                <td >{{$comment->user->username}}</td>
                                 <td class="text-center">
                                     @for($i=0; $i<4; $i++)
                                         @if($comment->note > $i) <i class="fa fa-star"></i>
@@ -74,10 +75,22 @@
                                 </td>
 
                                 <td class="text-center">
-
+                                    <p>@if(!in_array($comment->id, session('favoris', [])))
+                                        <a href="{{ route('comments_favori', [ 'id' => $comment->id, 'action' => 'favori']) }}" ><button type="button" class="btn btn-xs btn-system">
+                                                <i class="fa fa-star"></i>
+                                             Ajouter</button></a>
+                                    @else
+                                        <a href="{{ route('comments_favori', [ 'id' => $comment->id, 'action' => 'nonfavori']) }}" ><button type="button" class="btn btn-xs btn-dark">
+                                                <i class="fa fa-star-o"></i>
+                                                Retirer</button></a>
+                                    @endif</p>
                                     <p><a href="{{ route('comments_delete', ['id'=>$comment->id])}}" ><button type="button" class="btn btn-xs btn-danger">
                                                 <i class="fa fa-times"></i>
-                                            </button></a></p>
+                                            </button></a>
+                                        <a href="{{ route('comments_delete', ['id'=>$comment->id])}}" ><button type="button" class="btn btn-xs btn-warning">
+                                                <i class="fa fa-pencil"></i>
+                                            </button></a>
+                                    </p>
 
 
 

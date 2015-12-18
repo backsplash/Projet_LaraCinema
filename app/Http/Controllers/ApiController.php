@@ -62,10 +62,16 @@ class ApiController extends Controller{
         $actor= new Actors();
         $actors = $actor->getActorsCity();
         foreach($actors as $actor){
-                $tab[] = ['name' => $actor->city, 'data' => [(int)$actor->nb]]; //typage de la donnée en int
+                $tab["actors"][] = [
+                    'name' => $actor->city,
+                    'data' => [(int)$actor->nb
+                ]]; //typage de la donnée en int
 
+            $tab["name"][] = $actor->city;
 
         }
+
+
 
         return $tab;
     }

@@ -21,8 +21,8 @@ Class CommentsController extends Controller{
     public function index(){
 
         //creation d'un objet du model Comments
-        $model = new Comments();
-        $comments = $model->getAllComments();
+        //$model = new Comments();
+        $comments = Comments::all();
 
         //transporteur
         //transport des données du Controller à la vue
@@ -79,6 +79,56 @@ Class CommentsController extends Controller{
 
 
         //redirection vers la liste des commentaires
+        return Redirect::route('comments_index');
+    }
+
+
+
+    /**
+     * action favori enregistré en session
+     * stockage temporel
+     */
+
+    public function favori($id, $action){
+        //recuperation du commentaire concerné
+        $comment = Comments::find($id);
+
+        //recuperation de la variable favori en session
+        //et fixation d'un tableau par defaut
+        //si rien en session favori
+        $favoris = session("favoris", []);
+
+
+        //si l'action est 'favori'
+        if($action == "favori"){
+            //j'ajoute le commentaire dans le tableau des favoris
+            //en créant une clé qui a la valeur de l'id du commentaire
+            //pour pouvoir le retrouver
+            $favoris[$id] = $comment->id;
+            Session::flash('warning', "Le commentaire {$comment->id} est désormais en favori");
+
+        }else{
+            //suppression du favori dans le tableau
+            unset($favoris[$id]);
+            Session::flash('warning', "Le commentaire {$comment->id} n'est désormais plus en favori");
+
+        }
+
+        //enregistrement en session du nouveau tableau des favoris
+        Session::put("favoris", $favoris);
+
+        //redirection
+
+        return Redirect::route('comments_index');
+    }
+
+
+    public function forget($action = 'forget'){
+        Session::forget('favoris');
+        Session::flash('warning', "Tous les commentaires sont retirés des favoris");
+
+        //redirection
+
         return Redirect::route('comments_index');
     }
 

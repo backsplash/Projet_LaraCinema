@@ -26,11 +26,12 @@ class MoviesRequest extends FormRequest{
             'date_release' => 'required|date_format:d/m/Y|after:now',
             //'date_release' => 'required|regex://[0-9]{2}\/[0-9]{2}\/[0-9]{4}/'
             'image' => 'required|image',
-            'langue' => 'regex:/en|fr|es|ge|it/i',
+            'languages' => 'regex:/en|fr|es|ge|it/i',
             'bo' => 'required',
             'budget' => 'regex:/^[1-9]([0-9]{1,2})?(([. ]?[0-9]{3})*)([0-9]{3})?(,[0-9]{0,3})?$/',
             'duree' => 'regex:/^[1-9][0-9]{1,2}$/',
-            'trailer' => 'regex:/<iframe/'
+            'trailer' => 'regex:/<iframe/',
+            'categories_id' => 'required'
 
 
         ];

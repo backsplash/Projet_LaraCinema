@@ -38,4 +38,12 @@ class User extends Model{
 //            ->take($nb)
 //            ->get();
     }
+
+
+
+    public function comments(){
+        //namespace + nom de la classe mise en relation
+        return $this->hasMany('App\Http\Models\Comments');
+    }
+
 } 
