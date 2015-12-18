@@ -78,4 +78,30 @@ Class Movies extends Model{
 
     }
 
+
+    public function getMoviesDistributeur(){
+
+        return DB::table('movies')
+            ->select(DB::raw('COUNT(id) AS nbfilms, distributeur'))
+            ->whereNotNull('distributeur')
+            ->where('distributeur', '!=', '')
+            ->groupBy('distributeur')
+            ->orderBy('nbfilms', 'desc')
+            ->get();
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

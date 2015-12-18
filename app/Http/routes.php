@@ -346,6 +346,23 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
             "uses" => "MoviesController@cover"
         ])->where('id', '\d+');
 
+
+        /**
+         * action Like
+         */
+        Route::get('/like/{id}/{action}', [
+            "as" => "movies_like",
+            "uses" => "MoviesController@like"
+        ]);
+
+        /**
+         * action forget
+         */
+        Route::get('/forget/{action}', [
+            "as" => "movies_forget",
+            "uses" => "MoviesController@forget"
+        ]);
+
     });
 
     /**
@@ -506,6 +523,19 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
             'as' => 'api_categories',
             'uses' => 'ApiController@categories'
         ]);
+
+        // retour en JSON des actors
+        Route::get('/actors', [
+            'as' => 'api_actors',
+            'uses' => 'ApiController@actors'
+        ]);
+
+        // retour en JSON des actors par ville
+        Route::get('/actorsCity', [
+            'as' => 'api_actorsCity',
+            'uses' => 'ApiController@actorsCity'
+        ]);
+
 
 
 

@@ -27,9 +27,46 @@ class ApiController extends Controller{
         foreach($categories as $categorie){
             $tab[] = [
                 $categorie->title, 
-                count($categories->movies)
+                count($categorie->movies)
             ];
         }
+        return $tab;
+    }
+
+
+
+
+    /**
+     * retourne les données de actors
+     */
+    public function actors(){
+        $tab =[];
+        $actor= new Actors();
+        $actors = $actor->ageTranches();
+        foreach($actors as $actor){
+            $tab[] = [
+                $actor->tranche,
+                $actor->nb
+            ];
+        }
+        return $tab;
+    }
+
+
+    /**
+     * retourne les données des acteurs par ville
+     */
+    public function actorsCity(){
+        $tab =[];
+
+        $actor= new Actors();
+        $actors = $actor->getActorsCity();
+        foreach($actors as $actor){
+                $tab[] = ['name' => $actor->city, 'data' => [(int)$actor->nb]]; //typage de la donnée en int
+
+
+        }
+
         return $tab;
     }
 

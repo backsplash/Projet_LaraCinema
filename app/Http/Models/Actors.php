@@ -67,6 +67,37 @@ Class Actors extends Model{
 
     }
 
+    public function ageTranches(){
+
+        return DB::select('(SELECT "Entre 45 et 60 ans" AS tranche, COUNT( id ) AS nb
+FROM actors
+WHERE
+ROUND(TIMESTAMPDIFF( YEAR, dob, NOW( ))) BETWEEN 45 AND 60)
+UNION
+(SELECT "Entre 15 et 30 ans" AS tranche, COUNT( id ) AS nb
+FROM actors
+WHERE
+ROUND(TIMESTAMPDIFF( YEAR, dob, NOW( ))) BETWEEN 15 AND 30)
+UNION
+(SELECT "Entre 31 et 44 ans" AS tranche, COUNT( id ) AS nb
+FROM actors
+WHERE
+ROUND(TIMESTAMPDIFF( YEAR, dob, NOW( ))) BETWEEN 31 AND 44)
+UNION
+(SELECT "Plus de 60 ans" AS tranche, COUNT( id ) AS nb
+FROM actors
+WHERE
+ROUND(TIMESTAMPDIFF( YEAR, dob, NOW( ))) >60)');
+
+    }
+
+
+    public function getActorsCity(){
+        return Actors::select('city', DB::raw('COUNT(id) AS nb'))
+            ->groupBy('city')
+            ->get();
+    }
+
 
 
 }

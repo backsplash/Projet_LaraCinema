@@ -9,113 +9,38 @@
 <li class="dropdown menu-merge">
     <div class="navbar-btn btn-group">
         <button data-toggle="dropdown" class="btn btn-sm dropdown-toggle">
-            <span class="fa fa-bell-o fs14 va-m"></span>
-            <span class="badge badge-danger">9</span>
+            <span class="fa fa-heart-o fs14 va-m"></span>
+            <span class="badge badge-danger">{{ count(session('likes', [])) }}</span>
         </button>
         <div class="dropdown-menu dropdown-persist w350 animated animated-shorter fadeIn" role="menu">
             <div class="panel mbn">
                 <div class="panel-menu">
-                    <span class="panel-icon"><i class="fa fa-clock-o"></i></span>
-                    <span class="panel-title fw600"> Recent Activity</span>
+                    <span class="panel-icon"><i class="fa fa-movie-o"></i></span>
+                    <span class="panel-title fw600"> Films favoris</span>
                     <button class="btn btn-default light btn-xs pull-right" type="button"><i class="fa fa-refresh"></i></button>
                 </div>
                 <div class="panel-body panel-scroller scroller-navbar scroller-overlay scroller-pn pn">
                     <ol class="timeline-list">
+                        @forelse(session('likes', []) as $like)
                         <li class="timeline-item">
                             <div class="timeline-icon bg-dark light">
                                 <span class="fa fa-tags"></span>
                             </div>
                             <div class="timeline-desc">
-                                <b>Michael</b> Added to his store:
-                                <a href="#">Ipod</a>
+                                <b>{{ \App\Http\Models\Movies::find($like)->title}}</b>
+
                             </div>
-                            <div class="timeline-date">1:25am</div>
+
                         </li>
-                        <li class="timeline-item">
-                            <div class="timeline-icon bg-dark light">
-                                <span class="fa fa-tags"></span>
-                            </div>
-                            <div class="timeline-desc">
-                                <b>Sara</b> Added his store:
-                                <a href="#">Notebook</a>
-                            </div>
-                            <div class="timeline-date">3:05am</div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-icon bg-success">
-                                <span class="fa fa-usd"></span>
-                            </div>
-                            <div class="timeline-desc">
-                                <b>Admin</b> created invoice for:
-                                <a href="#">Software</a>
-                            </div>
-                            <div class="timeline-date">4:15am</div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-icon bg-success">
-                                <span class="fa fa-usd"></span>
-                            </div>
-                            <div class="timeline-desc">
-                                <b>Admin</b> created invoice for:
-                                <a href="#">Apple</a>
-                            </div>
-                            <div class="timeline-date">7:45am</div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-icon bg-success">
-                                <span class="fa fa-usd"></span>
-                            </div>
-                            <div class="timeline-desc">
-                                <b>Admin</b> created invoice for:
-                                <a href="#">Software</a>
-                            </div>
-                            <div class="timeline-date">4:15am</div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-icon bg-success">
-                                <span class="fa fa-usd"></span>
-                            </div>
-                            <div class="timeline-desc">
-                                <b>Admin</b> created invoice for:
-                                <a href="#">Apple</a>
-                            </div>
-                            <div class="timeline-date">7:45am</div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-icon bg-dark light">
-                                <span class="fa fa-tags"></span>
-                            </div>
-                            <div class="timeline-desc">
-                                <b>Michael</b> Added his store:
-                                <a href="#">Ipod</a>
-                            </div>
-                            <div class="timeline-date">8:25am</div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-icon bg-system">
-                                <span class="fa fa-fire"></span>
-                            </div>
-                            <div class="timeline-desc">
-                                <b>Admin</b> created invoice for:
-                                <a href="#">Software</a>
-                            </div>
-                            <div class="timeline-date">4:15am</div>
-                        </li>
-                        <li class="timeline-item">
-                            <div class="timeline-icon bg-dark light">
-                                <span class="fa fa-tags"></span>
-                            </div>
-                            <div class="timeline-desc">
-                                <b>Sara</b> Added to his store:
-                                <a href="#">Notebook</a>
-                            </div>
-                            <div class="timeline-date">3:05am</div>
-                        </li>
+                        @empty
+                        <div class="alert alert-danger">Auncun film ajouté</div>
+                        @endforelse
                     </ol>
 
                 </div>
                 <div class="panel-footer text-center p7">
-                    <a href="#" class="link-unstyled"> View All </a>
+                    
+                    <a href="{{ route('movies_forget', [ 'action' => 'forget']) }}" class="btn btn-xs btn-danger">Vider</a>
                 </div>
             </div>
         </div>

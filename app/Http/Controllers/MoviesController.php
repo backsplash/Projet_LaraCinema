@@ -219,6 +219,83 @@ Class MoviesController extends Controller{
 
 
 
+    /**
+     * action like enregistré en session
+     * stockage temporel
+     */
+
+    public function like($id, $action){
+        //recuperation du film concerné
+        $movie = Movies::find($id);
+
+        //recuperation de la variable likes en session
+        //et fixation d'un tableau par defaut
+        //si rien en session likes
+        $likes = session("likes", []);
+
+
+        //si l'action est 'like'
+        if($action == "like"){
+            //j'ajoute le movie dans le tableau des likes
+            //en créant une clé qui a la valeur de l'id du film
+            //pour pouvoir le retrouver
+            $likes[$id] = $movie->id;
+            Session::flash('warning', "Le film {$movie->title} est désormais liké");
+
+        }else{
+            //suppression du like dans le tableau
+            unset($likes[$id]);
+            Session::flash('warning', "Le film {$movie->title} est désormais disliké");
+
+        }
+
+        //enregistrement en session du nouveau tableau des likes
+        Session::put("likes", $likes);
+
+        //redirection
+
+        return Redirect::route('movies_index');
+    }
+
+
+    public function forget($action = 'forget'){
+        Session::forget('likes');
+        Session::flash('warning', "Tous les films sont dislikés");
+
+        //redirection
+
+        return Redirect::route('movies_index');
+    }
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

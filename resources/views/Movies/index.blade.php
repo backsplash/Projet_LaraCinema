@@ -64,7 +64,13 @@ Movies
 
                     @foreach($movies as $movie)
                     <tr>
-                        <td class="text-center">{{$movie->id}}</td>
+                        <td class="text-center">{{$movie->id}}
+                            <span>@if(!in_array($movie->id, session('likes', [])))
+                                <a href="{{ route('movies_like', [ 'id' => $movie->id, 'action' => 'like']) }}"><i class="fa fa-heart-o"></i></a>
+                            @else
+                                <a href="{{ route('movies_like', [ 'id' => $movie->id, 'action' => 'dislike']) }}"><i class="fa fa-heart"></i></a>
+                                @endif
+                            </span></td>
                         <td><figure><img class="img-responsive" src="{{$movie->image}}" alt="image"></figure></td>
 
                         <td class="text-center"><h3>{{$movie->title}}</h3></td>

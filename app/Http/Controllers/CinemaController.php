@@ -7,6 +7,7 @@
  */
 
 namespace App\Http\Controllers;
+use App\Http\Models\Cinema;
 use App\Http\Models\Cinemas;
 use Illuminate\Http\Request;
 use App\Http\Requests\CinemasRequest;
@@ -24,7 +25,7 @@ Class CinemaController extends Controller{
 
         //creation d'un objet du model Cinemas
         $model = new Cinema();
-        $cinemas = $model->getAllCinema();
+        $cinemas = $model->getAllCinemas();
 
         //transporteur
         //transport des données du Controller à la vue

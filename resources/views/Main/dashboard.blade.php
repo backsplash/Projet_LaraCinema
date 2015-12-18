@@ -13,6 +13,8 @@ Dashboard
     @parent
 <script src="{{ asset('vendor/plugins/highcharts/highcharts.js')}}"></script>
 <script src="{{ asset('vendor/plugins/circles/circles.js')}}"></script>
+<script src="{{ asset('vendor/plugins/c3charts/d3.min.js')}}"></script>
+<script src="{{ asset('vendor/plugins/c3charts/c3.min.js')}}"></script>
 <script src="{{ asset('vendor/plugins/jQuery-slimScroll-1.3.7/jquery.slimscroll.min.js')}}"></script>
 <script type="text/javascript">
     $(function(){
@@ -26,7 +28,7 @@ Dashboard
         // en passant par de l'ajax
         // $.getJSON(url, fonction de retour)
         // les données sont récupérées dans la variable data
-        $.getJSON("api/categories", function(data){
+        $.getJSON($('#high-pie').data('url'), function(data){
 
 
             //pie chart1
@@ -35,7 +37,8 @@ Dashboard
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
-                    plotShadow: false
+                    plotShadow: false,
+                    height: '300'
                 },
                 title: {
                     text: null
@@ -46,6 +49,7 @@ Dashboard
                 plotOptions: {
                     pie: {
                         center: ['30%', '50%'],
+
                         allowPointSelect: true,
                         cursor: 'pointer',
                         dataLabels: {
@@ -55,8 +59,9 @@ Dashboard
                     }
                 },
                 legend: {
-                    x: 90,
+
                     floating: true,
+                    align:'right',
                     verticalAlign: "middle",
                     layout: "vertical",
                     itemMarginTop: 10
@@ -68,6 +73,79 @@ Dashboard
                 }]
             });
         });
+
+
+
+      // c3 chart = donut chart
+        $.getJSON("api/actors", function(data){
+            var chart = c3.generate({
+                data: {
+                    columns: data,
+                    type : 'donut',
+                    onclick: function (d, i) { console.log("onclick", d, i); },
+                    onmouseover: function (d, i) { console.log("onmouseover", d, i); },
+                    onmouseout: function (d, i) { console.log("onmouseout", d, i); }
+                },
+                donut: {
+                    title: data.tranche
+                },
+                size: {
+                    height: 300
+                }
+            });
+        });
+
+       // highcharts histogramme
+
+        $.getJSON("api/actorsCity", function(data){
+            // High Line 3
+
+            $('#high-line').highcharts({
+                credits: false,
+                chart: {
+                    backgroundColor: '#f9f9f9',
+                    className: 'br-r',
+                    type: 'column',
+                    zoomType: 'x',
+                    panning: true,
+                    panKey: 'shift',
+                    marginTop: 25,
+                    marginRight: 1
+                },
+                title: {
+                    text: null
+                },
+                xAxis: {
+                    gridLineColor: '#EEE',
+                    lineColor: '#EEE',
+                    tickColor: '#EEE'
+                },
+                yAxis: {
+                    min: 0,
+                    tickInterval: 5,
+                    gridLineColor: '#EEE',
+                    title: {
+                        text: null
+                    }
+                },
+                plotOptions: {
+                    spline: {
+                        lineWidth: 3
+                    },
+                    area: {
+                        fillOpacity: 0.2
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                series: data
+            });
+
+       });
+
+
+
 
 
     });
@@ -147,35 +225,124 @@ Dashboard
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-7">
         <div class="panel panel-danger">
             <div class="panel-heading">
-                <span class="panel-title">Films par catégorie</span>
+                <span class="panel-title">Répartition des films par catégorie</span>
             </div>
 
             <div class="panel-body ">
+                <div data-url="{{ route('api_categories') }}" data-highcharts-chart="6" id="high-pie">
 
-
-
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div class="panel panel-danger">
             <div class="panel-heading">
-                <span class="panel-title">...</span>
+                <span class="panel-title">Répartition des acteurs par âge</span>
             </div>
 
             <div class="panel-body ">
 
+                <div id="chart" class="c3" style="height: 370px; width: 100%; max-height: 370px; position: relative;">
 
+                </div>
 
             </div>
+
+
         </div>
 
     </div>
 </div>
+
+
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <span class="panel-icon">
+                    <i class="fa fa-bar-chart-o"></i>
+                </span>
+                <span class="panel-title">Nombres</span>
+            </div>
+
+            <div class="panel-body pn">
+                <table class="table">
+
+                    <tbody>
+                        <tr>
+                            <td>
+                                Films <span class="badge bg-system pull-right">{{ $nbfilms}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            Catégories <span class="badge bg-dark pull-right">{{ $nbcategories}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            Acteurs <span class="badge bg-danger pull-right">{{ $nbacteurs}}</span>
+                        <</td>
+                        </tr>
+                        <tr>
+                            <td>
+                            Réalisateurs <span class="badge bg-alert pull-right">{{ $nbdirectors}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            Séances <span class="badge bg-warning pull-right">{{ $nbseances}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            Médias <span class="badge bg-primary pull-right">{{ $nbmedias}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <span class="panel-icon">
+                    <i class="fa fa-rss"></i>
+                </span>
+                <span class="panel-title">Distributeur</span>
+            </div>
+
+            <div class="panel-body pn">
+                <table class="table">
+
+                    <tbody>
+                    @foreach($movies_distributeur as $distributeur)
+                    <tr>
+                        <td>
+                            {{ $distributeur->distributeur }} <span class="pull-right">{{ round($distributeur->nbfilms/$nbfilms*100)}}%</span>
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 <div class="row">
@@ -266,22 +433,16 @@ Dashboard
 
 
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <span class="panel-title">Répartition des films par catégorie</span>
-            </div>
-
-            <div class="panel-body ">
-                <div data-highcharts-chart="6" id="high-pie">
-
-                </div>
-            </div>
+<div class="panel panel-danger ">
+    <div class="panel-heading">
+                <span class="panel-icon">
+                  <i class="fa fa-home"></i>
+                </span>
+        <span class="panel-title">Répartition des acteurs par ville</span>
+    </div>
+    <div class="panel-body pn">
+        <div data-highcharts-chart="3" id="high-line" ">
         </div>
     </div>
 </div>
-
-
-
 @endsection
