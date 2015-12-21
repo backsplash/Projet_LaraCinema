@@ -77,4 +77,27 @@ class ApiController extends Controller{
     }
 
 
+
+
+    /**
+     * retourne les données de comments
+     */
+    public function comments(){
+        $tab =[];
+        $comment= new Comments();
+        $comments = $comment->commentsRepartition();
+
+
+        foreach($comments as $comment){
+            $tab[] = [
+                ['name' => $comment->name],
+                ['valeur' => $comment->nb]
+            ];
+        }
+
+
+        return $tab;
+    }
+
+
 } 

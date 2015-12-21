@@ -160,11 +160,11 @@ Dashboard
 
        });
 
-        //$.getJSON($('#c1').data('url'), function(data){
+        $.getJSON($('#cercles').data('url'), function(data){
 
-        var demoCircleGraphs = function() {
             var infoCircle = $('.info-circle');
             if (infoCircle.length) {
+
                 // Color Library we used to grab a random color
                 var colors = {
                     "primary": [bgPrimary, bgPrimaryLr,
@@ -176,6 +176,9 @@ Dashboard
                     ],
                     "success": [bgSuccess, bgSuccessLr,
                         bgSuccessDr
+                    ],
+                    "system": [bgSystem, bgSystemLr,
+                        bgSystemDr
                     ],
                     "alert": [bgAlert, bgAlertLr, bgAlertDr]
                 };
@@ -192,9 +195,10 @@ Dashboard
                             targetColor][0]]
                     }
                     // Create all circles
+                    console.log(data[0][i]);
                     var circle = Circles.create({
                         id: $(e).attr('id'),
-                        value: $(e).attr('value'),
+                        value: data[i],
                         radius: $(e).width() / 2,
                         width: 14,
                         colors: color,
@@ -212,8 +216,9 @@ Dashboard
                 });
 
 
-            }        }
+            }
 
+        });
 
 
     });
@@ -530,7 +535,39 @@ Dashboard
                 <span class="panel-title">Répartition des commentaires</span>
             </div>
             <div class="panel-body pn">
-                <div class="info-circle" id="c1" title="Twitter" value="80" data-circle-color="primary"></div>
+                <div class="mb20 text-right">
+
+                    <span class="fs11 text-muted">
+                        <i class="fa fa-circle text-warning fs12 pr5"></i>
+
+                         Twitter
+
+                    </span>
+                    <span class="fs11 text-muted ml10">
+                        <i class="fa fa-circle text-alert fs12 pr5"></i>
+
+                         Facebook
+
+                    </span>
+                    <span class="fs11 text-muted ml10">
+                        <i class="fa fa-circle text-system fs12 pr5"></i>
+
+                         Google+
+
+                    </span>
+
+                </div>
+                <div id="cercles" data-url="{{ route('api_comments') }}">
+                    <div class="col-md-4 text-center">
+                        <div class="info-circle" id="c1" title="Twitter" value="80" data-circle-color="warning"></div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="info-circle" id="c2" title="Twitter" value="80" data-circle-color="alert"></div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="info-circle" id="c3" title="Twitter" value="80" data-circle-color="system"></div>
+                    </div>
+                </div>
             </div>
         </div>
 

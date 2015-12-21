@@ -47,4 +47,25 @@ Class Comments extends Model{
     }
 
 
+    public function commentsRepartition(){
+        // peut s'utiliser directement dans le Controller
+
+
+
+        return DB::select(DB::raw('(SELECT
+"actifs" AS name, COUNT(id) AS nb
+FROM
+comments WHERE state !=0)
+UNION
+(SELECT
+"inactifs", COUNT(id) AS nb
+FROM
+comments WHERE state =0)
+UNION
+(SELECT
+"suivis", COUNT(id) AS nb
+FROM
+comments WHERE state =2)'));
+    }
+
 }

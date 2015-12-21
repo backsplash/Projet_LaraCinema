@@ -17,7 +17,7 @@ Movies
 <script src="{{asset('vendor/plugins/datatables/media/js/dataTables.bootstrap.js')}}"></script>
 
 <script type="text/javascript">
-    $('a button.btn-danger').click(function(e){
+    $('a.ajaxOut').click(function(e){
 
         var elt = $(this);
         //1. blocker mon evenement (redirection)
@@ -32,6 +32,7 @@ Movies
             url: $(this).attr('href') // href du <a>
         }).done(function() {
             elt.parents('tr').fadeOut('slow');
+
 
         });
     });
@@ -89,9 +90,9 @@ Movies
                     <tr>
                         <td class="text-center">{{$movie->id}}
                             <span>@if(!in_array($movie->id, session('likes', [])))
-                                <a href="{{ route('movies_like', [ 'id' => $movie->id, 'action' => 'like']) }}"><i class="fa fa-heart-o"></i></a>
+                                <a  href="{{ route('movies_like', [ 'id' => $movie->id, 'action' => 'like']) }}"><i class="fa fa-heart-o"></i></a>
                             @else
-                                <a href="{{ route('movies_like', [ 'id' => $movie->id, 'action' => 'dislike']) }}"><i class="fa fa-heart"></i></a>
+                                <a  href="{{ route('movies_like', [ 'id' => $movie->id, 'action' => 'dislike']) }}"><i class="fa fa-heart"></i></a>
                                 @endif
                             </span></td>
                         <td><figure><img class="img-responsive" src="{{$movie->image}}" alt="image"></figure></td>
@@ -113,22 +114,22 @@ Movies
                         <td class="text-center"><h5><em>{{$movie->annee}}</em></h5></td>
                         <td class="text-center">
                             @if($movie->cover==1)
-                            <p><a href="{{ route('movies_cover', ['id'=>$movie->id])}}" class="btn btn-xs btn-system"><i class="fa fa-star"></i></a></p>
+                            <p><a  href="{{ route('movies_cover', ['id'=>$movie->id])}}" class="btn btn-xs btn-system "><i class="fa fa-certificate"></i></a></p>
                             @else
-                            <p><a href="{{ route('movies_cover', ['id'=>$movie->id])}}" class="btn btn-xs btn-dark"><i class="fa fa-star-o"></i></a></p>
+                            <p><a href="{{ route('movies_cover', ['id'=>$movie->id])}}" class="btn btn-xs btn-dark "><i class="fa fa-sun-o"></i></a></p>
                             @endif
 
                             @if($movie->visible==1)
-                            <p><a href="{{ route('movies_activate', ['id'=>$movie->id])}}" class="btn btn-xs btn-system"><i class="fa fa-eye"></i></a></p>
+                            <p><a  href="{{ route('movies_activate', ['id'=>$movie->id])}}" class="btn btn-xs btn-system "><i class="fa fa-eye"></i></a></p>
                             @else
-                            <p><a href="{{ route('movies_activate', ['id'=>$movie->id])}}" class="btn btn-xs btn-dark"><i class="fa fa-eye-slash"></i></a></p>
+                            <p><a  href="{{ route('movies_activate', ['id'=>$movie->id])}}" class="btn btn-xs btn-dark "><i class="fa fa-eye-slash"></i></a></p>
                             @endif
                         </td>
                         <td class="text-center">
                             <p><a href="{{ route('movies_edit', ['id'=>$movie->id])}}" ><button type="button" class="btn btn-xs btn-warning">
                                     <i class="fa fa-pencil "></i>
                                 </button></a></p>
-                            <p><a href="{{ route('movies_delete', ['id'=>$movie->id])}}" ><button type="button" class="btn btn-xs btn-danger">
+                            <p><a class="ajaxOut" href="{{ route('movies_delete', ['id'=>$movie->id])}}" ><button type="button" class="btn btn-xs btn-danger">
                                     <i class="fa fa-times"></i>
                                 </button></a></p>
                             <p><a href="{{ route('movies_read', ['id'=>$movie->id])}}" ><button type="button" class="btn btn-xs btn-system">

@@ -553,6 +553,12 @@ Route::group(["prefix" => "admin", 'middleware' => 'auth'], function(){
             'uses' => 'ApiController@actorsCity'
         ]);
 
+        // retour en JSON des commentaires par statut
+        Route::get('/comments', [
+            'as' => 'api_comments',
+            'uses' => 'ApiController@comments'
+        ]);
+
 
 
 

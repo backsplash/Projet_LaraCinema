@@ -205,7 +205,7 @@ Class MoviesController extends Controller{
         else{
             $movie->cover = 0;
             //creer un messsage flash de type success
-            Session::flash('warning', "Le film {$movie->title} est n'est désormais plus mis en avant");
+            Session::flash('warning', "Le film {$movie->title} n'est désormais plus mis en avant");
         }
 
         //save() permet de sauvegarder l'objet modifier en base de données
